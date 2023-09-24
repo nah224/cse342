@@ -57,12 +57,19 @@ clientSocket.send(msg.encode())
 
 # Message ends with a single period.
 clientSocket.send(endMsg.encode())
+recv5 = clientSocket.recv(1024).decode()
+print(recv5)
+if recv5[:3] != '250':
+   print('250 reply not recieved from server (recv5).')
 
 # Send QUIT command and get server response.
 quitCommand = 'QUIT\r\n'
 clientSocket.send(quitCommand.encode())
-recv5 = clientSocket.recv(1024).decode()
-print(recv5)
+recv6 = clientSocket.recv(1024).decode()
+print(recv6)
 # Check for service closing transmission channel code
-if recv5[:3] != '221':
-   print('221 reply not recieved from server (recv5).')
+if recv6[:3] != '221':
+   print('221 reply not recieved from server (recv6).')
+
+# Close the socket
+clientSocket.close()
