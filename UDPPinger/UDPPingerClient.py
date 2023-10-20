@@ -3,18 +3,18 @@ from socket import *
 from time import *
 
 # Store server address and port
-serverAddress = ('localhost', 4041)
+serverAddress = ('128.180.120.67', 4041)
 # Create client socket
 clientSocket = socket(AF_INET, SOCK_DGRAM)
 # Set client timeout at 1 second
 clientSocket.settimeout(1.0)
 
 # Iterate for 10 pings
-for pingNumber in range(10):
-    # Ping message to be sent
-    msg = f'Ping {pingNumber}'.encode()
+for pingNumber in range(1, 11):
     # Store start time
     start = time()
+    # Ping message to be sent
+    msg = f'Ping {pingNumber} {start}'.encode()
     # Send message to server
     clientSocket.sendto(msg, serverAddress)
 
@@ -27,7 +27,7 @@ for pingNumber in range(10):
         # Calculate round trip time
         rtt = end - start
         # Print response and rtt
-        print(f'Response from {server[0]}: {data.decode()} - RTT: {rtt}')
+        print(f'{server[0]}: {data.decode()} - RTT: {rtt}')
     except timeout:
         # No response recieved
         print('Request timed out')
