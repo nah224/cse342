@@ -12,3 +12,26 @@
 # (2) print the response message from server, if any 
 # (3) calculate and print the round trip time (RTT), in seconds, of each packet, if server responds 
 # (4) otherwise, print “Request timed out” 
+
+from socket import *
+
+serverAddress = ('localhost', 4041)
+
+clientSocket = socket(AF_INET, SOCK_DGRAM)
+
+clientSocket.settimeout(1.0)
+
+for pingNumber in range(10):
+    msg = f'Ping {pingNumber}'.encode()
+
+    clientSocket.sendto(msg, serverAddress)
+
+    try:
+        data, server = clientSocket.recvfrom(1024)
+
+        print(f'{data.decode()}')
+    except timeout:
+        # No response recieved
+        print('Request timed out')
+
+clientSocket.close()
